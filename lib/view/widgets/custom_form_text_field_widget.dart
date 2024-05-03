@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CustomFormTextFieldWidget extends StatelessWidget {
    CustomFormTextFieldWidget({
-    super.key,   this.isPassword=false, required this.hintText, required this.label,this.onChange
+    super.key,   this.isPassword=false, required this.hintText, required this.label,this.onChange, required this.icon
   });
    bool? isPassword;
   final String hintText;
   final String label;
   Function(String)? onChange;
+  final IconData icon;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,7 +27,7 @@ class CustomFormTextFieldWidget extends StatelessWidget {
         obscureText: isPassword!,
         decoration: InputDecoration(
           hintText: hintText,
-          prefixIcon: Icon(Icons.email),
+          prefixIcon: Icon(icon),
           filled: true,
           label: Text(label),
           enabledBorder: OutlineInputBorder(

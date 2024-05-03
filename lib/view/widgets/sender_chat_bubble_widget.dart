@@ -8,7 +8,7 @@ class SenderChatBubbleWidget extends StatelessWidget {
   const SenderChatBubbleWidget({
     super.key,required this.message,
   });
-  final MessageModel message;
+  final MessageModal message;
   @override
   Widget build(BuildContext context) {
     return Align(

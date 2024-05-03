@@ -7,7 +7,7 @@ class ReciverChatBubbleWidget extends StatelessWidget {
   const ReciverChatBubbleWidget({
     super.key,required this.message,
   });
-  final MessageModel message;
+  final MessageModal message;
   @override
   Widget build(BuildContext context) {
     return Align(
