@@ -1,6 +1,6 @@
+import 'package:chat_app/bloc/auth_bloc/auth_bloc.dart';
 import 'package:chat_app/constant/colors.dart';
 import 'package:chat_app/constant/strings.dart';
-import 'package:chat_app/cubits/auth_cubit/auth_cubit.dart';
 import 'package:chat_app/cubits/chat_cubit/chat_cubit.dart';
 import 'package:chat_app/view/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
@@ -22,15 +22,15 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthCubit, AuthState>(
+    return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is LoginLoading) {
+        if (state is LoginLoadingState) {
           isLoading = true;
-        } else if (state is LoginSuccess) {
+        } else if (state is LoginSuccessState) {
           BlocProvider.of<ChatCubit>(context).getMessage();
           Navigator.pushNamed(context, ChatScreen.id, arguments: email);
           isLoading = false;
-        } else if (state is LoginFailuer) {
+        } else if (state is LoginFailuerState) {
           failSnackBar(context, state.errMessage);
           isLoading = false;
         }
@@ -83,9 +83,7 @@ class LoginScreen extends StatelessWidget {
                       text: 'Sign In',
                       onTap: () async {
                         if (formKey.currentState!.validate()) {
-                          BlocProvider.of<AuthCubit>(context).loginUser(
-                              email: email.toString().trim(),
-                              password: password.toString().trim());
+                          BlocProvider.of<AuthBloc>(context).add(LoginEvent(email!, password!));
                         }
                       }),
                   Row(

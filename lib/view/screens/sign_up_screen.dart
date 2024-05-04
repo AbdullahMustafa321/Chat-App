@@ -1,5 +1,5 @@
+import 'package:chat_app/bloc/auth_bloc/auth_bloc.dart';
 import 'package:chat_app/constant/colors.dart';
-import 'package:chat_app/cubits/auth_cubit/auth_cubit.dart';
 import 'package:chat_app/view/widgets/custom_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,16 +19,16 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthCubit, AuthState>(
+    return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is RegisterLoading) {
+        if (state is RegisterLoadingState) {
           isLoading = true;
-        } else if (state is RegisterSuccess) {
+        } else if (state is RegisterSuccessState) {
           successSnackBar(
               context, 'Your account has been successfully created');
           Navigator.pop(context);
           isLoading = false;
-        } else if (state is RegisterFailuer) {
+        } else if (state is RegisterFailuerState) {
           failSnackBar(context, state.errMessage);
           isLoading = false;
         }
@@ -73,9 +73,7 @@ class SignUpScreen extends StatelessWidget {
                     text: 'Sign Up',
                     onTap: () async {
                       if (formKey.currentState!.validate()) {
-                        BlocProvider.of<AuthCubit>(context).registerUser(
-                            email: email.toString().trim(),
-                            password: password.toString().trim());
+                        BlocProvider.of<AuthBloc>(context).add(RegisterEvent(email!, password!));
                       }
                     },
                   ),
