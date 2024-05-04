@@ -1,8 +1,7 @@
 import 'package:chat_app/constant/colors.dart';
 import 'package:chat_app/constant/strings.dart';
+import 'package:chat_app/cubits/auth_cubit/auth_cubit.dart';
 import 'package:chat_app/cubits/chat_cubit/chat_cubit.dart';
-import 'package:chat_app/cubits/login_cubit/login_cubit.dart';
-import 'package:chat_app/cubits/login_cubit/login_state.dart';
 import 'package:chat_app/view/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/view/screens/sign_up_screen.dart';
@@ -23,7 +22,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LoginCubit, LoginState>(
+    return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is LoginLoading) {
           isLoading = true;
@@ -84,7 +83,7 @@ class LoginScreen extends StatelessWidget {
                       text: 'Sign In',
                       onTap: () async {
                         if (formKey.currentState!.validate()) {
-                          BlocProvider.of<LoginCubit>(context).loginUser(
+                          BlocProvider.of<AuthCubit>(context).loginUser(
                               email: email.toString().trim(),
                               password: password.toString().trim());
                         }
